@@ -66,15 +66,13 @@ const _ = (props) => {
         //         setRelatedVideos({data: vRelated})
         //     })
         // })
-        let team = videos.data.team;
-        console.log(team)
 
        ///Using the Database Instead of API(fetch api)...
         teamsDatabase.once('value')
         .then(snapTData => {
             let tData = firebaseLooper(snapTData);
 
-            videosDatabase.orderByChild('team').equalTo(team).once('value')
+            videosDatabase.orderByChild('team').equalTo(3).once('value')
             .then(rVideoSnap => {
                 let rVideo = firebaseLooper(rVideoSnap);
 
@@ -84,7 +82,7 @@ const _ = (props) => {
         })
     }
 
-    // console.log('Hacked Videos', videos)
+    // console.log('Hacked Videos', videos.data)
     // console.log('Hacked Teams', team)
     // console.log('Related_Videos :->>> ',relatedVideos)
     // console.log('Teams_Data :->>> ',teamsData)
@@ -95,7 +93,7 @@ const _ = (props) => {
     }else{
         return (
             <>
-                <Header tData={team} date={videos.data.date} /> 
+                <Header tData={team.data[0]} date={videos.data.date} /> 
                 <Videos vData={videos.data} /> 
                 <RelatedVideos videosData={relatedVideos.data} teamsData={teamsData.data} />
             </>

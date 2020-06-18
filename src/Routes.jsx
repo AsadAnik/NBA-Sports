@@ -7,6 +7,7 @@ import Articles from './components/Articles';
 import Videos from './components/Articles/Videos';
 import News from './components/Articles/News';
 import MainVideos from './components/Articles/MainVideos';
+import Signin from './Authentication';
 
 ///Routing Section of application...
 const Routes = () => {
@@ -18,6 +19,7 @@ const Routes = () => {
                     <Route path='/videos' exact component={MainVideos} />
                     <Route path='/articles/:id' exact component={Articles} />
                     <Route path='/videos/:id' exact component={Videos} />
+                    <Route path='/sign-in' exact component={Signin} />
                 </Switch>
             </Layout>
         )

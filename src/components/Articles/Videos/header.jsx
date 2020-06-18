@@ -4,9 +4,9 @@ import Styles from '../articles.module.css';
 const Header = ({tData, date}) => {
  ///Catching the data in Object from Props..   
     const teams = {
-        name: tData.data.name,
-        city: tData.data.city,
-        logo: tData.data.logo
+        name: tData.name,
+        city: tData.city,
+        logo: tData.logo
     }
 
  ///Return Statement..   

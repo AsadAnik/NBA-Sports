@@ -65,7 +65,9 @@ class _ extends Component {
             .then(videoSnapData => {
                 const videosData = firebaseLooper(videoSnapData);
                 this.setState({
-                    videos: [...this.state.videos, ...videosData]
+                    videos: [...this.state.videos, ...videosData],
+                    startURL: start,
+                    endURL: end
                 })
             })
             .catch(e => console.log('ERROR in Homes Videos Section -->> ', e))
