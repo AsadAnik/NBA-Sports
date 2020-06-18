@@ -44,15 +44,16 @@ const _ = (props) => {
                 setVideos({data: vData});
                 setTeam({data: tData});
                 setLoading(false);
-                vRelated(tData)
+                // vRelated(tData)
+                vRelated()
             })
         })   
 
     }, [props.match.params.id])
 
  ///Related Videos fetching...   
-    const vRelated = (teamData) => {
-        let city = teamData[0].city;
+    const vRelated = () => {
+        // let city = teamData[0].city;
 
         // fetch(`${URL}/teams`)
         // .then(res => res.json())
@@ -65,6 +66,22 @@ const _ = (props) => {
         //         setRelatedVideos({data: vRelated})
         //     })
         // })
+        let team = videos.data.team;
+        console.log(team)
+
+       ///Using the Database Instead of API(fetch api)...
+        teamsDatabase.once('value')
+        .then(snapTData => {
+            let tData = firebaseLooper(snapTData);
+
+            videosDatabase.orderByChild('team').equalTo(team).once('value')
+            .then(rVideoSnap => {
+                let rVideo = firebaseLooper(rVideoSnap);
+
+                setTeamsData({data: tData});
+                setRelatedVideos({data: rVideo});
+            })
+        })
     }
 
     // console.log('Hacked Videos', videos)
