@@ -52,5 +52,11 @@ button:hover{
 .label_message{
     color: red;
     font-weight: bold;
+    font-size: 13.5px;
     margin-bottom: 8px;
+}
+.strongPassMessage{
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
 }
