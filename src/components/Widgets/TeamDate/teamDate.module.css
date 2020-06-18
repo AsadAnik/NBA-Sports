@@ -1,0 +1,22 @@
+/*Dates and Teams*/
+.team_date{
+    font-size: 13px;
+    text-decoration: none;
+    padding-bottom: 8px;
+}
+.team{
+    margin-left: 10px;
+    background: gray;
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: #fff;
+}
+.date{
+    margin-left: 5px;
+    font-size: 12px;
+    color: gray;
+}
+.date_clock{
+    color: rgb(54, 53, 53);
+    margin-left: 10px;
+}

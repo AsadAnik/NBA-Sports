@@ -1,0 +1,8 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: rgb(233, 232, 232);
+    font-family: 'Roboto', sans-serif;;
+}
+
+a{ text-decoration: none; }

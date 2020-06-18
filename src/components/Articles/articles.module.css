@@ -1,0 +1,89 @@
+/*Article Post Header*/
+.header{
+    margin: 5px;
+    border: 1px solid lightgray;
+    background: #fff;
+}
+.head{
+    display: flex;
+    border-bottom: 1px solid lightgray;
+}
+.head img{
+    height: 100px;
+}
+.teamname{
+    margin-left: 10px;
+    padding: 0 10px;
+    border-radius: 50px;
+    background: gray;
+    color: #fff;
+}
+.stats{
+    margin-left: 15px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.foot{
+    padding: 0 10px;
+    line-height: 8px;
+    font-size: 13px;
+}
+.littleBold{
+    font-weight: bold;
+}
+
+/*Article Post Body*/
+.body{
+    margin: 5px;
+    background: #fff;
+    padding: 5px 10px;
+    border: 1px solid lightgray;
+}
+.body h1{
+    font-size: 25px;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    color: rgb(65, 64, 64);
+}
+.body img{
+    height: 40vh;
+    width: 100%;
+}
+.body p{
+    color:rgb(65, 64, 64);
+}
+
+/*Article Videos Header*/
+.vTeamname{
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 0 10px;
+    margin-bottom: 40px;
+    margin-left: 5px;
+    border-radius: 20px;
+}
+.vShare{
+    color: lightgray;
+    background: rgb(76, 76, 76);
+    font-size: 13px;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+}
+.vShare:hover, .vShare:focus{
+    color: #fff;
+    background: #000;
+}
+
+/*The Media Queries for Articles*/
+@media only screen and (min-width: 768px){
+    .body h1{
+        text-align: center;
+    }
+    .body img{
+        height: 90vh;
+    }
+    .body p{
+        text-align: center;
+    }
+}
