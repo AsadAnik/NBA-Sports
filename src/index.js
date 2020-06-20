@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-//connecting Database..
-import './Firebase';
+//Auth User from Firebase..
+import { firebase } from './Firebase';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+///To checking user is valid or not after dig into the application routes..
+firebase.auth().onAuthStateChanged((user) => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <App user={user} />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+})
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

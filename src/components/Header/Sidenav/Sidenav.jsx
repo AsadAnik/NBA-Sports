@@ -21,7 +21,7 @@ const Sidenav = (props) => {
                 color: '#fff'
             }}
         >
-            <SidenavItems />
+            <SidenavItems user={props.user} />
         </SideNav>
     )
 }

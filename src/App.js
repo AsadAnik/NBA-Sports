@@ -10,7 +10,7 @@ class App extends Component {
         <PageRender>
           <Router>
             <div className='App'>
-              <Routes />  
+              <Routes {...this.props} />  
             </div>
           </Router>
         </PageRender>

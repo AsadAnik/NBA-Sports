@@ -60,3 +60,10 @@ button:hover{
     text-transform: uppercase;
     font-size: 14px;
 }
+.registerErrorMessage{
+    font-size: 14px;
+    color: orange;
+    font-weight: bold;
+    width: 90%;
+    margin-left: 5%;
+}

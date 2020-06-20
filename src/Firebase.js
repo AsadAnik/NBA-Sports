@@ -37,6 +37,7 @@ const videosDatabase = firebaseDB.ref('videos');
   }
 
 export {
+  firebase,
   firebaseDB,
   articlesDatabase,
   teamsDatabase,

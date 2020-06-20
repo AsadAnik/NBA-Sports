@@ -10,9 +10,10 @@ import MainVideos from './components/Articles/MainVideos';
 import Signin from './Authentication';
 
 ///Routing Section of application...
-const Routes = () => {
+const Routes = (props) => {
+
         return (
-            <Layout>
+            <Layout user={props.user}>
                 <Switch>
                     <Route path='/' exact component={Home} />
                     <Route path='/news' exact component={News} />
