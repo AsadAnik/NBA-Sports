@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import {firebase} from '../../../Firebase';
+import { firebase } from '../../../Firebase';
 import { FaHome, FaNewspaper, FaPlay, FaCreativeCommonsBy, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import Styles from './Sidenav.module.css';
 
 const SidenavItems = (props) => {
-
     //Items JSON's here which is controlled with loop..  
     const items = [
         {
@@ -52,55 +51,60 @@ const SidenavItems = (props) => {
         }
     ]
 
-    console.log('sidenav props inner ------ ', props)
+    //Checking User...
+    // console.log('sidenav props inner ------ ', props)
 
-    //Looping Function...   
-    const showItems = () => (
-        items.map((item, index) => (
-            item.login !== '' ?
-                restrigatedItems(item, index)
-                :
-                sidenavItems(item, index)
-        ))
-    )
-
-    const sidenavItems = (item, index) => (
+    ///The Common items which is need to showing in every steps more..   
+    const commonItems = (item, index) => (
         <div key={index} className={item.itemStyle}>
             {item.icon}
             <Link to={item.linkTo}>{item.text}</Link>
         </div>
     )
 
-    const restrigatedItems = (item, index) => {
-        let showIfLoggedIn = null;
+    ///The Dynamic items for showing the items or not..  
+    const dynamicItems = (item, index) => {
+        let output = null;
 
+        //Check if user is not present and inteadly also login is need true. 
         if (props.user === null && item.login) {
-            showIfLoggedIn = sidenavItems(item, index);
+            output = commonItems(item, index);
         }
 
+        //user is present and not need to sign-in again so login false.
         if (props.user && !item.login) {
-            if (item.linkTo === '/sign-out') {
-                showIfLoggedIn = (
+            if (item.linkTo === '/sign-out') {//make sign-out route to accual sign-out.
+                output = (
                     <div key={index} className={item.itemStyle}
                         onClick={() => {
                             firebase.auth().signOut()
-                            .then(() => {
-                                props.history.push('/')
-                            })
-                            .catch(error => console.log(error))
+                                .then(() => {
+                                    props.history.push('/');
+                                })
+                                .catch(error => console.log(error))
                         }}
                     >
                         {item.icon}
-                        <Link>{item.text}</Link>
+                        {item.text}
                     </div>
                 )
             } else {
-                showIfLoggedIn = sidenavItems(item, index);
+                output = commonItems(item, index);
             }
         }
 
-        return showIfLoggedIn;
+        return output;
     }
+
+    //Looping Function for loop throw the arrray for navbars item...   
+    const showItems = () => (
+        items.map((item, index) => (
+            item.login !== '' ?
+                dynamicItems(item, index)
+                :
+                commonItems(item, index)
+        ))
+    )
 
     //The Return Statement...   
     return (

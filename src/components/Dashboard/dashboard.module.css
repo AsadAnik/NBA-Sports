@@ -1,0 +1,67 @@
+/*The form CSS style module*/
+.postForm{
+    display: grid;
+    justify-content: center;
+    background: #fff;
+    border: 0.5px solid lightgray;
+    padding-bottom: 20px;
+    font-size: 16px;
+    padding: 0 10px;
+}
+.postForm h2{ 
+    border-bottom: 4px solid #242424;
+    margin-bottom: 15px;
+    width: 50%;
+    margin-left: 20%;
+}
+
+.mainLayer{
+    margin-left: 5%;
+    width: 90% !important;
+}
+.label{
+    
+}
+.input{
+    width: 90%;
+    
+    outline: 0;
+    font-size: 19px;
+    border: 1px solid rgb(119, 136, 153);
+    border-radius: 3px;
+    padding: 3px 5px;
+}
+button{
+    width: 100%;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: #242424;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: 0.2s all ease-in;
+}
+button:hover{
+    background: #fff;
+    color: #000;
+    border: 1px solid;
+}
+
+/*----------The Next step---------*/
+.label_message{
+    color: red;
+    font-weight: bold;
+    font-size: 13.5px;
+   margin-top: 8px;
+}
+
+/*The Word Editor*/
+.editor{
+    border: 1px solid black;
+}

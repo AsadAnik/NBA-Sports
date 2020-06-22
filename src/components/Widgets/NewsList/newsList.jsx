@@ -5,9 +5,6 @@ import Styles from './news.module.css';
 import TeamDate from '../TeamDate/teamDate';
 
 const NewsList = ({type, listData, teams}) => {
-
-    console.log(listData)
-    
  ///Function for Checking type and grabing the data for specific item..   
     const NewsItems = (newsType) => {
         let nData = null;

@@ -4,7 +4,6 @@ import Styles from './teamDate.module.css';
 import { FaClock } from 'react-icons/fa';
 
 const TeamDate = ({ teams, teamId, date }) => {
-
   //Finding the Team Name with Articles ID checking...   
     const calculateTeamWithID = (team, id) => {
         let findTeam = team.find((value) => value.teamId === id)
