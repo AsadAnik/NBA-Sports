@@ -1,0 +1,46 @@
+/********The File Uploader Image styles of CSSModule********/
+.FileUploader{
+    margin-bottom: 10px;
+    width: 50%;
+}
+.FileUploader input{
+    background: #242424;
+    width: 100%;
+    color: #fff;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.imageFile{
+    width: 200%;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/********Specially For Progress counting loading number when uploading*******/
+.progress{
+    font-size: 5rem;
+    position: fixed;
+    display: grid;
+    color: #fff;
+    margin-top: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 25px;
+    border-radius: 100%;
+    width: 10rem;
+    height: 10rem;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -60%);
+    z-index: 1;
+    cursor: progress;
+}
+.progress span{
+    padding: 0;
+    margin: 0;
+    margin-top: 15%;
+}

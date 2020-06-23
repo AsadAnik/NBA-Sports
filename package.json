@@ -54,6 +54,7 @@
     "react-dev-utils": "^10.2.1",
     "react-dom": "^16.13.1",
     "react-draft-wysiwyg": "^1.14.5",
+    "react-firebase-file-uploader": "2.4.3",
     "react-icons": "^3.10.0",
     "react-loading": "^2.0.3",
     "react-router-dom": "^5.2.0",

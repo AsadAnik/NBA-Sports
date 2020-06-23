@@ -3,6 +3,7 @@ import FormField from './formFields';
 import Loading from '../Widgets/Loading/loading';
 import Styles from './dashboard.module.css';
 import { teamsDatabase } from '../../Firebase';
+import Uploader from '../Widgets/FileUploader';
 
 ///Imported Elements for Special_Words_Editor...
 import { Editor } from 'react-draft-wysiwyg';
@@ -21,6 +22,9 @@ class Dashboard extends Component {
             author: {
                 element: 'input',
                 value: '',
+                label: true,
+                labelText: 'Author Name',
+
                 config: {
                     name: 'author_input',
                     type: 'text',
@@ -36,6 +40,9 @@ class Dashboard extends Component {
             title: {
                 element: 'input',
                 value: '',
+                label: true,
+                labelText: 'Post Title',
+
                 config: {
                     name: 'title_input',
                     type: 'text',
@@ -51,12 +58,16 @@ class Dashboard extends Component {
             body: {
                 element: 'texteditor',
                 value: '',
-                valid: true
+                valid: true,
+                label: true,
+                labelText: 'Make Post',
             },
             teams: {
                 element: 'teamSelector',
                 value: '',
-                valid: true,
+                label: true,
+                labelText: 'Select Team',
+
                 config: {
                     name: 'select_team',
                     options: []
@@ -67,6 +78,13 @@ class Dashboard extends Component {
                 valid: false,
                 touched: false,
                 validationMessage: ''
+            },
+            fileUpload: {
+                element: 'fileupload',
+                value: '',
+                valid: true,
+                label: true,
+                labelText: 'Upload File'
             }
         }
     }
@@ -162,7 +180,6 @@ class Dashboard extends Component {
             formIsValid = this.state.formdata[key].valid && formIsValid;
         }
 
-
         if (formIsValid) {
             console.log(dataToSubmit)
         }
@@ -184,6 +201,15 @@ class Dashboard extends Component {
             <div className={Styles.label_message}>{this.state.postError}</div>
             : ''
     )
+    //Showing the Label...
+    showLabel = (label) => (
+        label ?
+            <div className={Styles.label}>
+                <span>{label.labelText}</span>
+            </div>
+            :
+            null
+    )
 
     ///The Editors Method.... 
     onEditorStateChange = (editorState) => {
@@ -200,6 +226,11 @@ class Dashboard extends Component {
         })
     }
 
+    ///Filename Method when uploaded file finished then collect this name..
+    getFileName = (filename) => {
+        this.updateForm({ id: 'fileUpload' }, filename)
+    }
+
     ///The Rendaring method...
     render() {
         return (///Return Statement....
@@ -208,18 +239,25 @@ class Dashboard extends Component {
                     <h2>Add Post</h2>
 
                     <div className={Styles.mainLayer}>
+
+                        {this.showLabel(this.state.formdata.fileUpload)}
+                        <Uploader fileName={(filename) => this.getFileName(filename)} />
+
+                        {this.showLabel(this.state.formdata.author)}
                         <FormField
                             id={'author'}
                             formdata={this.state.formdata.author}
                             change={(element) => this.updateForm(element)}
                         />
 
+                        {this.showLabel(this.state.formdata.title)}
                         <FormField
                             id={'title'}
                             formdata={this.state.formdata.title}
                             change={(element) => this.updateForm(element)}
                         />
 
+                        {this.showLabel(this.state.formdata.body)}
                         <Editor
                             editorState={this.state.editorState}
                             wrapperClassName="myEditor-wrapper"
@@ -227,7 +265,8 @@ class Dashboard extends Component {
                             onEditorStateChange={this.onEditorStateChange}
                         />
 
-                        <FormField 
+                        {this.showLabel(this.state.formdata.teams)}
+                        <FormField
                             id={'teams'}
                             formdata={this.state.formdata.teams}
                             change={(element) => this.updateForm(element)}
