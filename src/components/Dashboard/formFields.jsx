@@ -1,53 +1,71 @@
 import React from 'react';
 import Styles from './dashboard.module.css';
 
-const Fields = ({formData, change}) => {
+const FormFields = ({formdata,change,id}) =>{
 
-    const renderField = (formData) => {
-        let output = null;
+    const showError = () => {
+        let errorMessage = null;
 
-        switch(formData.elements){
-            case "input":
-                output = <input className={Styles.input} {...formData.config} onChange={(event) => changeFunc(event, formData)} />
+        if(formdata.validation && !formdata.valid){
+            errorMessage = (
+                <div className={Styles.label_message}>
+                    {formdata.validationMessage}
+                </div>
+            )
+        }
+
+        return errorMessage;
+    }
+
+
+    const renderTemplate = () => {
+        let formTemplate = null;
+
+        switch(formdata.element){
+            case('input'):
+                formTemplate = (
+                    <div>
+                        <input
+                            className={Styles.input}
+                            {...formdata.config}
+                            value={formdata.value}
+                            onBlur={(event) => change({event,id,blur:true})}
+                            onChange={(event) => change({event,id,blur:false})}
+                        />
+                        { showError() }
+                    </div>
+                )
                 break;
-
+                
+               case('teamSelector'):
+                    formTemplate = (
+                        <div>
+                            <select 
+                                value={formdata.value}  
+                                name={formdata.config.name}
+                                onChange={(event) => change({event, id, blur: false})}
+                                onBlur={(event) => change({event, id, blur:true})}
+                            >
+                                {formdata.config.options.map((teams, id) => (
+                                    <option key={id} value={teams.id}>{teams.city}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )
+                    break;
+                    
             default:
-                output = null;
+                formTemplate = null;
         }
-
-        return output;
+        return formTemplate;
     }
 
-   //The Input values change statement.. 
-    const changeFunc = (event, data) => {
-        let value = event.target.value;
-        data.value = value;
-
-        let validateData = validation(data);//This will returning an array,
-        data.valid = validateData[0];
-        data.validationMessage = validateData[1];
-
-        change(data)
-    }
-
-  //From Validate is Empty or Not..  
-    const validation = (data) => {
-        let error = [true, ''];
-
-        if (data.validation) {
-            let valid = data.value.trim() !== '';
-            let vMessage = `${!valid ? 'This Field Is Required!' : ''}`;
-            error = !valid ? [valid, vMessage] : error;
-        }
-        return error;
-    }
-
-    ///The return statement....
-    return (
-       <>
-           {renderField(formData)}
-       </>
+    return(
+        <div>
+            {renderTemplate()}
+        </div>
     )
+
 }
 
-export default Fields;
+export default FormFields;

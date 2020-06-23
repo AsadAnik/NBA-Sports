@@ -873,6 +873,20 @@
     border-radius: 3px;
     padding: 1px 10px;
   }
+
+/*****************************CUSTOMIZEEEDDD******************************/
+  .myEditor-wrapper{
+      width: 90%;
+      padding: 6px;
+      background: rgb(45, 45, 45);
+      border-radius: 5px;
+      border: 1px solid rgb(212, 212, 212);
+  }
+  .myEditor-editor{
+    background: #fff;
+    padding: 0 20px;
+  }
+
   /**
    * Draft v0.9.1
    *

@@ -1,164 +1,243 @@
 import React, { Component } from 'react';
-import Input from './formFields';
+import FormField from './formFields';
+import Loading from '../Widgets/Loading/loading';
 import Styles from './dashboard.module.css';
+import { teamsDatabase } from '../../Firebase';
 
-///using the draft-js and the word editor with react-draft-wysiwyg..
+///Imported Elements for Special_Words_Editor...
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, ConvertFromRaw, ConvertToRaw, convertToRaw } from 'draft-js';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 
+
 class Dashboard extends Component {
-    ///Application state for this posting way solved..
-    state = {
+    ///The State for this POSTing System...
+    state = {///State..
         editorState: EditorState.createEmpty(),
+        postError: '',
         loading: false,
 
-        formData: {
+        formdata: {
             author: {
-                elements: 'input',
-                label: true,
-                labelText: 'Your Name',
+                element: 'input',
                 value: '',
-
                 config: {
-                    name: 'author',
+                    name: 'author_input',
                     type: 'text',
-                    placeholder: 'Whats your name..'
+                    placeholder: 'Enter your name'
                 },
-
                 validation: {
-                    required: true,
+                    required: true
                 },
                 valid: false,
                 touched: false,
-                validationMessage: '',
+                validationMessage: ''
             },
             title: {
-                elements: 'input',
-                label: true,
-                labelText: 'Title',
+                element: 'input',
                 value: '',
-
                 config: {
-                    name: 'title',
+                    name: 'title_input',
                     type: 'text',
-                    placeholder: 'Write title..'
+                    placeholder: 'Enter the title'
                 },
-
                 validation: {
-                    required: true,
+                    required: true
                 },
                 valid: false,
                 touched: false,
-                validationMessage: '',
+                validationMessage: ''
             },
+            body: {
+                element: 'texteditor',
+                value: '',
+                valid: true
+            },
+            teams: {
+                element: 'teamSelector',
+                value: '',
+                valid: true,
+                config: {
+                    name: 'select_team',
+                    options: []
+                },
+                validation: {
+                    required: true
+                },
+                valid: false,
+                touched: false,
+                validationMessage: ''
+            }
         }
     }
 
-    //the change function for when using keys inner of the input bar then use the value..
-    changeFunc = (newData) => {
+    ///The React LIfeCycle method... 
+    componentDidMount() {
+        this.teamFetched()
+    }
+
+    //To fetching the data from teams database..
+    teamFetched = () => {
+        teamsDatabase.once('value')
+            .then(snapShotData => {
+                let newTeamsData = [];
+
+                snapShotData.forEach(snapTeams => {
+                    newTeamsData.push({
+                        id: snapTeams.val().teamId,
+                        city: snapTeams.val().city
+                    })
+                })
+
+                //Now create new state and put into the set state for old state..
+                const formDataState = { ...this.state.formdata };
+                const newDataState = { ...formDataState['teams'] };
+                newDataState.config.options = newTeamsData;
+                formDataState['teams'] = newDataState;
+
+                //Set the state with new state again..
+                this.setState({
+                    formdata: formDataState
+                })
+                // console.log(this.state.formdata.teams)
+            })
+            .catch(error => console.log('Team Selector on POST in dashboard route --- ', error))
+    }
+
+
+    ///onChange methods Handler another method... 
+    updateForm = (element, content = '') => {
+        const newFormdata = {
+            ...this.state.formdata
+        }
+        const newElement = {
+            ...newFormdata[element.id]
+        }
+
+        //Condition for Special_Word_Editor..
+        if (content === '') {
+            newElement.value = element.event.target.value;
+        } else {
+            newElement.value = content;
+        }
+
+        if (element.blur) {
+            let validData = this.validate(newElement);
+            newElement.valid = validData[0];
+            newElement.validationMessage = validData[1];
+        }
+        newElement.touched = element.blur;
+        newFormdata[element.id] = newElement;
+
+        //lets set the state..
         this.setState({
-            ...this.state.formData,
-            newData,
+            formdata: newFormdata
         })
-
-        console.log('NewStateData -->> ', this.state.formData)
     }
 
-    //Showing the label innne of this fields of label when says true..
-    showLabel = (labelType) => (
-        labelType.label ?
-            <div className={Styles.label}>
-                <span>{labelType.labelText}</span>
-            </div>
-            :
-            null
-    )
+    ///Simple Validation method..
+    validate = (element) => {
+        let error = [true, ''];
 
-    ///Showing the Error messages for posting fields.... 
-    showError = (fieldMessage) => {
-        let showMessage = null;
+        if (element.validation.required) {
+            const valid = element.value.trim() !== '';
+            const message = `${!valid ? 'This field is required' : ''}`;
+            error = !valid ? [valid, message] : error
+        }
 
-        fieldMessage.validation.required && !fieldMessage.valid ?
-            showMessage = (
-                <div className={Styles.label_message}>
-                    <span>{fieldMessage.validationMessage}</span>
-                </div>
-            )
-            :
-            showMessage = null
-
-        return showMessage;
+        return error;
     }
 
-    //The method for submitting the form with click post button..
+    ///The Submit method for POST form submit..
     submitForm = (event) => {
         event.preventDefault();
 
-        let userValues = {};
-        let validForm = true;
+        let dataToSubmit = {};
+        let formIsValid = true;
 
-        for(let i in this.state.formData){
-            userValues[i] = this.state.formData[i].value;
+        for (let key in this.state.formdata) {
+            dataToSubmit[key] = this.state.formdata[key].value
+        }
+        for (let key in this.state.formdata) {
+            formIsValid = this.state.formdata[key].valid && formIsValid;
         }
 
-        for(let j in this.state.formData){
-            validForm = this.state.formData[j].valid && validForm;
-        }
 
-        if (validForm) {
-            alert('POSTED!!!')
-            console.log(userValues)
+        if (formIsValid) {
+            console.log(dataToSubmit)
         }
     }
 
-    ///The Editors Method...
+    ///Submit Button for make POST of this form...
+    submitButton = () => (
+        this.state.loading ?
+            <Loading />
+            :
+            <div>
+                <button className={Styles.btn} type="submit"> Add Post </button>
+            </div>
+    )
+
+    ///Show Errors Method..
+    showError = () => (
+        this.state.postError !== '' ?
+            <div className={Styles.label_message}>{this.state.postError}</div>
+            : ''
+    )
+
+    ///The Editors Method.... 
     onEditorStateChange = (editorState) => {
-
         let contentState = editorState.getCurrentContent();
-        let rawState = convertToRaw(contentState);
-        let html = stateToHTML(contentState);
+        // let rawState = convertToRaw(contentState)
+        let html = stateToHTML(contentState)
 
-        console.log(html)
+        //Called Function for setting the Value...  
+        this.updateForm({ id: 'body' }, html)
 
+        //Set the Event on to state...  
         this.setState({
             editorState,
         })
     }
 
-
-    //The rendering method of this app posting site...
+    ///The Rendaring method...
     render() {
-        return (//Returning Statement...
-            <form className={Styles.postForm} onSubmit={(event) => this.submitForm(event)}>
-                <h2>Add Post</h2>
-                <div className={Styles.mainLayer}>
-                    {this.showLabel(this.state.formData.author)}
-                    <Input
-                        className={Styles.input}
-                        formData={this.state.formData.author}
-                        change={(newData) => this.changeFunc(newData)}
-                    />
-                    {this.showError(this.state.formData.author)}
+        return (///Return Statement....
+            <div className={Styles.postForm}>
+                <form onSubmit={this.submitForm}>
+                    <h2>Add Post</h2>
 
-                    {this.showLabel(this.state.formData.title)}
-                    <Input
-                        className={Styles.input}
-                        formData={this.state.formData.title}
-                        change={(newData) => this.changeFunc(newData)}
-                    />
-                    {this.showError(this.state.formData.title)}
+                    <div className={Styles.mainLayer}>
+                        <FormField
+                            id={'author'}
+                            formdata={this.state.formdata.author}
+                            change={(element) => this.updateForm(element)}
+                        />
 
-                    <Editor
-                        editorState={this.state.editorState}
-                        wrapperClassName="myEditorWrapper"
-                        editorClassName="editor"
-                        onEditorStateChange={this.onEditorStateChange}
-                    />
+                        <FormField
+                            id={'title'}
+                            formdata={this.state.formdata.title}
+                            change={(element) => this.updateForm(element)}
+                        />
 
-                    <button type="submit">post</button>
-                </div>
-            </form>
+                        <Editor
+                            editorState={this.state.editorState}
+                            wrapperClassName="myEditor-wrapper"
+                            editorClassName="myEditor-editor"
+                            onEditorStateChange={this.onEditorStateChange}
+                        />
+
+                        <FormField 
+                            id={'teams'}
+                            formdata={this.state.formdata.teams}
+                            change={(element) => this.updateForm(element)}
+                        />
+
+                        {this.submitButton()}
+                        {this.showError()}
+                    </div>
+                </form>
+            </div>
         )
     }
 }
