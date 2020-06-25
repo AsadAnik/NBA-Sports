@@ -1,14 +1,15 @@
 import React, { useState ,useEffect } from 'react';
 // import {URL} from '../../config';
-import {firebaseDB, teamsDatabase, firebaseLooper} from '../../Firebase';
+import {firebaseDB, teamsDatabase, firebaseLooper, firebase} from '../../Firebase';
 import Loading from '../Widgets/Loading/loading';
 import Header from './Post/header';
 import Body from './Post/body';
 
 const Article = (props) => {
-    const [articleData, setArticleData] = useState({data: []})
-    const [teamData, setTeamData] = useState({data: []})
-    const [loading, setLoading] = useState(false)
+    const [articleData, setArticleData] = useState({data: []});
+    const [teamData, setTeamData] = useState({data: []});
+    const [loading, setLoading] = useState(false);
+    const [imageURL, setImageURL] = useState(null);
 
  //LifeCycle Function with Hooks...   
     useEffect(() => {
@@ -43,12 +44,18 @@ const Article = (props) => {
                     setLoading(true)
                 })
 
+                ///Getting the Image From Database which is choose from POST of user...
+                firebase.storage().ref('images').child(articlesData.image).getDownloadURL()
+                .then( url => {
+                    setImageURL(url);
+                })
             })
 
     }, [props.match.params.id])
 
     // console.log('articleData --------------', articleData)
     // console.log('teamData ---------- ', teamData);
+    // console.log('Image From Database (Firebase)------- ', imageURL)
 
  ///Loading the Page Until the API is called....   
     if(!loading){
@@ -61,7 +68,7 @@ const Article = (props) => {
                     author={articleData.data.author} 
                     date={articleData.data.date} 
                 />
-                <Body articleData={articleData.data} />
+                <Body articleData={articleData.data} imageURL={imageURL} />
             </>
         )
     }

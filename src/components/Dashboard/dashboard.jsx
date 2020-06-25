@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { firebase, articlesDatabase } from '../../Firebase';
 import FormField from './formFields';
 import Loading from '../Widgets/Loading/loading';
 import Styles from './dashboard.module.css';
@@ -7,7 +8,8 @@ import Uploader from '../Widgets/FileUploader';
 
 ///Imported Elements for Special_Words_Editor...
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
+// import { convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 
 
@@ -62,7 +64,7 @@ class Dashboard extends Component {
                 label: true,
                 labelText: 'Make Post',
             },
-            teams: {
+            team: {
                 element: 'teamSelector',
                 value: '',
                 label: true,
@@ -79,7 +81,7 @@ class Dashboard extends Component {
                 touched: false,
                 validationMessage: ''
             },
-            fileUpload: {
+            image: {
                 element: 'fileupload',
                 value: '',
                 valid: true,
@@ -109,15 +111,15 @@ class Dashboard extends Component {
 
                 //Now create new state and put into the set state for old state..
                 const formDataState = { ...this.state.formdata };
-                const newDataState = { ...formDataState['teams'] };
+                const newDataState = { ...formDataState['team'] };
                 newDataState.config.options = newTeamsData;
-                formDataState['teams'] = newDataState;
+                formDataState['team'] = newDataState;
 
                 //Set the state with new state again..
                 this.setState({
                     formdata: formDataState
                 })
-                // console.log(this.state.formdata.teams)
+                // console.log(this.state.formdata.team)
             })
             .catch(error => console.log('Team Selector on POST in dashboard route --- ', error))
     }
@@ -181,7 +183,47 @@ class Dashboard extends Component {
         }
 
         if (formIsValid) {
-            console.log(dataToSubmit)
+            this.setState({
+                loading: true,
+                postError: '',
+            })
+
+            ///Fetching from Firebase and post the data..
+            articlesDatabase.orderByChild("id").limitToLast(1).once("value")
+                .then(snapArticledata => {
+                    let articlesId = null;
+
+                    snapArticledata.forEach(childData => {
+                        articlesId = childData.val().id;
+                    })
+
+                    console.log(articlesId);
+
+                    dataToSubmit['date'] = firebase.database.ServerValue.TIMESTAMP;
+                    dataToSubmit['id'] = articlesId + 1;
+                    dataToSubmit['team'] = parseInt(dataToSubmit['team']);
+
+                    // console.log(dataToSubmit)
+
+                    ///make POST to Database(Firebase)...   
+                    articlesDatabase.push(dataToSubmit)
+                        .then(articleData => {
+                            this.props.history.push(`/articles/${articleData.key}`)
+                        })
+                        .catch(error => {
+                            this.setState({
+                                loading: false,
+                                postError: error.message
+                            })
+                        })
+                })
+
+            // console.log(dataToSubmit)
+
+        } else {
+            this.setState({
+                postError: 'Somethings wents wrong!'
+            })
         }
     }
 
@@ -228,7 +270,7 @@ class Dashboard extends Component {
 
     ///Filename Method when uploaded file finished then collect this name..
     getFileName = (filename) => {
-        this.updateForm({ id: 'fileUpload' }, filename)
+        this.updateForm({ id: 'image' }, filename)
     }
 
     ///The Rendaring method...
@@ -240,7 +282,7 @@ class Dashboard extends Component {
 
                     <div className={Styles.mainLayer}>
 
-                        {this.showLabel(this.state.formdata.fileUpload)}
+                        {this.showLabel(this.state.formdata.image)}
                         <Uploader fileName={(filename) => this.getFileName(filename)} />
 
                         {this.showLabel(this.state.formdata.author)}
@@ -265,10 +307,10 @@ class Dashboard extends Component {
                             onEditorStateChange={this.onEditorStateChange}
                         />
 
-                        {this.showLabel(this.state.formdata.teams)}
+                        {this.showLabel(this.state.formdata.team)}
                         <FormField
-                            id={'teams'}
-                            formdata={this.state.formdata.teams}
+                            id={'team'}
+                            formdata={this.state.formdata.team}
                             change={(element) => this.updateForm(element)}
                         />
 

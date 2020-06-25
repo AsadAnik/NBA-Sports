@@ -71,6 +71,7 @@
 .label_message{
     color: red;
     font-weight: bold;
-    font-size: 13.5px;
-   margin-top: 8px;
+    font-size: 15.5px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
