@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Slider from '../../Widgets/SliderMotion/slider';
 // import { URL } from '../../../config';
-import {articlesDatabase, firebaseLooper} from '../../../Firebase';
+import {articlesDatabase, firebaseLooper, firebase} from '../../../Firebase';
 
 const _ = ({ type, slidersAmount, settings }) => {
     const [sliderData, setSliderData] = useState({ data: [] })
@@ -30,7 +30,14 @@ const _ = ({ type, slidersAmount, settings }) => {
             articlesDatabase.limitToFirst(slidersAmount).once('value')
             .then(snapshop => {
                 const snapData = firebaseLooper(snapshop);
-                setSliderData({data: snapData})
+
+                snapData.forEach((item, i) => {
+                    firebase.storage().ref('images').child(item.image).getDownloadURL()
+                    .then(url => {
+                        snapData[i].image = url;
+                        setSliderData({data: snapData})
+                    })
+                })
             })
             .catch(e => console.log('Home_Slider_ERROR -->> ', e))
 

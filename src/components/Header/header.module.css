@@ -9,12 +9,24 @@
 }
 
 .logo{
-    flex-grow: 1;
+    /* flex-grow: 1; */
     padding-top: 8px;
 }
 
 .logo img{
-    width: 35px;
+    width: 42px;
+    margin-top: -10px;
+}
+.l{
+    color: red;
+}
+
+.appName{
+    color: #fff;
+    padding: 10px 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .burgerMenuBar{

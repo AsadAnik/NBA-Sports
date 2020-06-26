@@ -27,7 +27,7 @@ const Slider = ({ sliderData, type, settings }) => {
                         <div
                             className={Styles.slider_image}
                             style={{
-                                background: `url(../images/articles/${item.image})`
+                                background: `url('${item.image}')`
                             }}
                         >
                         </div>

@@ -18,7 +18,7 @@ const Home = () => {
 
                 <NewsShow
                     type={'news'}
-                    slidersEntry={3}
+                    slidersEntry={0}
                     slidersAmount={3}
                 />
 

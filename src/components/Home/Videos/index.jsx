@@ -93,7 +93,7 @@ class _ extends Component {
  //Showing Title of Video or not..  
     renderTitle = (title) => {
         return title ? (
-            <div className={Styles.title}><span>NBA</span> Videos</div>
+            <div className={Styles.title}><span>Sports</span> Videos</div>
         ) : (null)
     }
 

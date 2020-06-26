@@ -1,6 +1,6 @@
 import React from 'react';
 // import { URL } from '../../../config';
-import { teamsDatabase, articlesDatabase, firebaseLooper, firebase } from '../../../Firebase';
+import { teamsDatabase, articlesDatabase, firebaseLooper } from '../../../Firebase';
 import NewsList from '../../Widgets/NewsList/newsList';
 import Button from '../../Widgets/Button/button';
 
@@ -90,7 +90,7 @@ class _ extends React.Component {//classBase component..
                 <NewsList type={type} listData={data} teams={teams} />
 
                 <Button
-                    type={'blue_btn'}
+                    type={'red_btn'}
                     value={'Load More News'}
                     loadMoreClick={() => this.LoadMoreNews()}
                 />

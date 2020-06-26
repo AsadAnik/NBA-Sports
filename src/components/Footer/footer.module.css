@@ -1,9 +1,19 @@
 .footer{
     margin-top: 20px;
-    background: #242424;
+    background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.footerName{
+    color: #fff;
+    padding: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.l{
+    color: red;
 }
 
 .logo img{

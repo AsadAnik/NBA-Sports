@@ -10,6 +10,10 @@ const Buttons = ({ type, value, loadMoreClick, linkAdress, moreVideoClick }) => 
             button = <button className={Styles.btn_blue} onClick={() => loadMoreClick()}>{value}</button>
             break;
 
+        case "red_btn":
+            button = <button className={Styles.btn_red} onClick={() => loadMoreClick()}>{value}</button>
+            break;
+
         case "link_btn":
             button = <Link to={linkAdress} className={Styles.btn_link}>{value}</Link>
             break;
