@@ -6,10 +6,10 @@ import Button from '../../Widgets/Button/button';
 import Videos from '../../Widgets/VideoList/videos';
 
 class _ extends Component {
-    constructor(props) {//constructor..
+    constructor(props) {
         super(props)
 
-        this.state = {//App_State,
+        this.state = {
             ...props,
             videos: [],
             teams: [],
@@ -112,7 +112,7 @@ class _ extends Component {
         return renderingList;
     }
 
-    render() {//App Rendering Method...
+    render() {
         // console.log('Vidoes Fetched : ', this.state.videos)
         // console.log('Teams Fetched : ', this.state.teams)
 

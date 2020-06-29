@@ -36,6 +36,10 @@ const videosDatabase = firebaseDB.ref('videos');
       return newData;
   }
 
+//The Authentication Login Providers...
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
+
 export {
   firebase,
   firebaseDB,
@@ -43,4 +47,6 @@ export {
   teamsDatabase,
   videosDatabase,
   firebaseLooper,
+  googleAuthProvider,
+  facebookAuthProvider
 }

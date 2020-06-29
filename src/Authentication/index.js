@@ -4,6 +4,9 @@ import Input from './auth';
 import Styles from './auth.module.css';
 import Loading from '../components/Widgets/Loading/loading';
 
+///Providers Authentication..
+import ProvidersAuth from './ProvidersAuth';
+
 class Auth extends React.Component {
     ///State for form Data Validation for Login/Register...
     state = {
@@ -136,16 +139,18 @@ class Auth extends React.Component {
 
 
     //The Main Rendaring Function...
-    render() {//The rendaring method inner here...
+    render() {
         return (
             <form onSubmit={(e) => this.submittedForm(e, null)} className={Styles.form}>
                 <h2>Register/Login</h2>
+                {/**********Login/Registering From here**********/}
                 <Input
                     formData={this.state.formData}
                     change={(newState) => this.updateState(newState)}
                     changeWithBlur={(newState) => this.updateState(newState)}
                 />
 
+                {/********Buttons for Submit Or for Login********/}
                 {this.showErrorMessage(this.state.registerError)}
                 {
                     this.state.loading ?
@@ -156,6 +161,10 @@ class Auth extends React.Component {
                             <button type='submit' onClick={(e) => this.submittedForm(e, false)}>Register</button>
                         </>
                 }
+                <br />
+
+                {/*******************Providers Authentication*******************/}
+                <ProvidersAuth />
             </form>
         )
     }

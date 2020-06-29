@@ -15,7 +15,7 @@ import { stateToHTML } from 'draft-js-export-html';
 
 class Dashboard extends Component {
     ///The State for this POSTing System...
-    state = {///State..
+    state = {
         editorState: EditorState.createEmpty(),
         postError: '',
         loading: false,
@@ -197,11 +197,11 @@ class Dashboard extends Component {
                         articlesId = childData.val().id;
                     })
 
-                    console.log(articlesId);
+                    // console.log(articlesId);
 
                     dataToSubmit['date'] = firebase.database.ServerValue.TIMESTAMP;
                     dataToSubmit['id'] = articlesId + 1;
-                    dataToSubmit['team'] = parseInt(dataToSubmit['team']);
+                    dataToSubmit['team'] = parseInt(dataToSubmit['team'], 10);
 
                     // console.log(dataToSubmit)
 
@@ -275,13 +275,13 @@ class Dashboard extends Component {
 
     ///The Rendaring method...
     render() {
-        return (///Return Statement....
+        return (
             <div className={Styles.postForm}>
                 <form onSubmit={this.submitForm}>
                     <h2>Add Post</h2>
 
+                    {/**********************MAIN FORMS FIELDS SECTION***********************/}
                     <div className={Styles.mainLayer}>
-
                         {this.showLabel(this.state.formdata.image)}
                         <Uploader fileName={(filename) => this.getFileName(filename)} />
 

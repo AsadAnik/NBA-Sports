@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import Layout from './HOC/layout';
 
 import Home from './components/Home/home';
@@ -10,19 +10,24 @@ import MainVideos from './components/Articles/MainVideos';
 import Dashboard from './components/Dashboard/dashboard';
 import Signin from './Authentication';
 
+//The Auth Routes...
+import PublicRoute from './AuthRoutes/PublicRoutes';
+import PrivateRoute from './AuthRoutes/PrivateRoutes';
+
 ///Routing Section of application...
 const Routes = (props) => {
-
+///Maked the Restricted user from Sign-in/Sign-Out cheking the user with React-Router..
         return (
             <Layout user={props.user}>
                 <Switch>
-                    <Route path='/' exact component={Home} />
-                    <Route path='/news' exact component={News} />
-                    <Route path='/videos' exact component={MainVideos} />
-                    <Route path='/articles/:id' exact component={Articles} />
-                    <Route path='/videos/:id' exact component={Videos} />
-                    <Route path='/dashboard' exact component={Dashboard} />
-                    <Route path='/sign-in' exact component={Signin} />
+                    <PublicRoute {...props} restricted={false} path='/' exact component={Home} />
+                    <PublicRoute {...props} restricted={false} path='/news' exact component={News} />
+                    <PublicRoute {...props} restricted={false} path='/videos' exact component={MainVideos} />
+                    <PublicRoute {...props} restricted={false} path='/articles/:id' exact component={Articles} />
+                    <PublicRoute {...props} restricted={false} path='/videos/:id' exact component={Videos} />
+                    <PublicRoute {...props} restricted={true} path='/sign-in' exact component={Signin} />
+
+                    <PrivateRoute {...props} path='/dashboard' exact component={Dashboard} />
                 </Switch>
             </Layout>
         )

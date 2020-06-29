@@ -10,7 +10,6 @@ const Home = () => {
                     type={'slider'}
                     slidersAmount={3}
                     settings={{
-                   //Reuseable settings components.. 
                     dots: false,
                     arrows: false,
                     }}

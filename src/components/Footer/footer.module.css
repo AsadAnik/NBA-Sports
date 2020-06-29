@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap');
+
 .footer{
     margin-top: 20px;
     background: #000;
@@ -7,6 +9,7 @@
 }
 
 .footerName{
+    font-family: 'Odibee Sans', cursive;
     color: #fff;
     padding: 20px;
     text-transform: uppercase;
@@ -14,6 +17,7 @@
 }
 .l{
     color: red;
+    text-decoration: underline;
 }
 
 .logo img{

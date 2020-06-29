@@ -4,11 +4,11 @@ import { teamsDatabase, articlesDatabase, firebaseLooper } from '../../../Fireba
 import NewsList from '../../Widgets/NewsList/newsList';
 import Button from '../../Widgets/Button/button';
 
-class _ extends React.Component {//classBase component..
-    constructor(props) {//Constructor..
+class _ extends React.Component {
+    constructor(props) {
         super(props)
 
-        this.state = {//State..
+        this.state = {
             data: [],
             teams: [],
             type: this.props.type,
@@ -80,7 +80,7 @@ class _ extends React.Component {//classBase component..
         this.getFetchedData(URLpoints.end + 1, URLpoints.amountEnd)
     }
 
-    render() {//The Render Method..
+    render() {
         const { type, data, teams } = this.state;
         // console.log('Articles ', this.state.data)
         // console.log('Teams ', this.state.teams)

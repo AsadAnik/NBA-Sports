@@ -49,7 +49,7 @@ class Uploader extends Component {
     }
 
     ///The Render Method to Rendaring the template..
-    render() {//Rendaring Method...
+    render() {
         return (
             <div className={Styles.FileUploader}>
                 <FileUploader

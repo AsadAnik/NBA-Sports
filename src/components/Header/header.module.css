@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap');
 .header{
     background: #000;
     width: 100%;
@@ -19,6 +20,7 @@
 }
 .l{
     color: red;
+    text-decoration: underline;
 }
 
 .appName{
@@ -26,11 +28,13 @@
     padding: 10px 10px;
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
+    font-family: 'Odibee Sans', cursive;
 }
 
 .burgerMenuBar{
     color: #fff;
     padding: 10px;
     cursor: pointer;
+    font-size: 22px;
 }

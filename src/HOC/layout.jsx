@@ -6,7 +6,7 @@ import Footer from '../components/Footer/footer';
 
 class Layout extends React.Component{
 
-    state = {//State,
+    state = {
         showNav: false,
     }
 
@@ -18,7 +18,7 @@ class Layout extends React.Component{
     }
 
 
-    render(){//Render Method...
+    render(){
         return (
             <div>
                 <Header showNav={this.state.showNav} 
